@@ -40,53 +40,50 @@ public class Main {
 		if (args.length > 0) {
 
 			FileMessageReader messageReader = null;
-			MessageWriter realMessageWriter = null;
+			MessageWriter messageWriter = null;
 
 			try {
 				messageReader = new FileMessageReader(args[0]);
 
 				if (args.length > 1) {
-					realMessageWriter = new FileMessageWriter(args[1]);
+					messageWriter = new CompressingMessageWriter(new FileMessageWriter(args[1]));
 				} else {
-					realMessageWriter = new ConsoleMessageWriter();
+					messageWriter = new CompressingMessageWriter(new ConsoleMessageWriter());
+				}
+								
+				// Let's get this party started!
+				Message message = null;
+				while ((message = messageReader.getMessage()) != null) {
+					messageWriter.writeMessage(message);
 				}
 
 			} catch (FileNotFoundException e) {
 				// Only messageReader could throw FileNotFoundException.
 				System.err.println("Couldn't find file: " + args[0]);
-				return;
 			} catch (IOException e) {
-				System.err
-						.println("Strange IOException happened during reading. Message: "
-								+ e.getMessage());
-				return;
-			}
-
-			// At this point messageReader and realMessageWriter are defined.
-			MessageWriter messageWriter = new CompressingMessageWriter(
-					realMessageWriter);
-			Message message;
-
-			try {
-				while ((message = messageReader.getMessage()) != null) {
-					messageWriter.writeMessage(message);
-				}
-			} catch (IllegalMessageFormatException | IOException e) {
+				System.err.println("Strange IOException happened during file processing. Message: " + e.getMessage());
+			} catch (IllegalMessageFormatException e) {
 				System.err.println("Error: " + e.getMessage());
 			} finally {
 				try {
-					messageReader.close();
-					// The wrapper will close a resource by itself.
-					messageWriter.close();
+					if (messageReader != null) {
+						messageReader.close();
+					}
 				} catch (IOException e) {
-					System.err
-							.println("Strange IOException happened during closing file. Message: "
-									+ e.getMessage());
+					System.err.println("Strange IOException happened during closing file. Message: " + e.getMessage());
+				}
+				try {
+					if (messageWriter != null) {
+						// The wrapper will close a resource by itself.
+						messageWriter.close();
+					}
+				} catch (IOException e) {
+					System.err.println("Strange IOException happened during closing file. Message: " + e.getMessage());
 				}
 			}
-
 		} else {
 			System.out.println("Too few parameters");
+			System.exit(1);
 		}
 	}
 }
