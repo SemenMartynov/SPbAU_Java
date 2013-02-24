@@ -59,5 +59,5 @@ public class FileMessageWriter implements MessageWriter {
 	/**
 	 * The buffer for record of messages in the file.
 	 */
-	private BufferedWriter writer = null;
+	private BufferedWriter writer;
 }

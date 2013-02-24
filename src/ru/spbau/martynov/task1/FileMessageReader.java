@@ -84,6 +84,6 @@ public class FileMessageReader {
 	/**
 	 * The buffer for reading from the file.
 	 */
-	private BufferedReader reader = null;
+	private BufferedReader reader;
 
 }
