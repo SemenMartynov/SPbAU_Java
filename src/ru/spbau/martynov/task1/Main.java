@@ -46,11 +46,13 @@ public class Main {
 				messageReader = new FileMessageReader(args[0]);
 
 				if (args.length > 1) {
-					messageWriter = new CompressingMessageWriter(new FileMessageWriter(args[1]));
+					messageWriter = new CompressingMessageWriter(
+							new FileMessageWriter(args[1]));
 				} else {
-					messageWriter = new CompressingMessageWriter(new ConsoleMessageWriter());
+					messageWriter = new CompressingMessageWriter(
+							new ConsoleMessageWriter());
 				}
-								
+
 				// Let's get this party started!
 				Message message = null;
 				while ((message = messageReader.getMessage()) != null) {
@@ -61,7 +63,9 @@ public class Main {
 				// Only messageReader could throw FileNotFoundException.
 				System.err.println("Couldn't find file: " + args[0]);
 			} catch (IOException e) {
-				System.err.println("Strange IOException happened during file processing. Message: " + e.getMessage());
+				System.err
+						.println("Strange IOException happened during file processing. Message: "
+								+ e.getMessage());
 			} catch (IllegalMessageFormatException e) {
 				System.err.println("Error: " + e.getMessage());
 			} finally {
@@ -70,7 +74,9 @@ public class Main {
 						messageReader.close();
 					}
 				} catch (IOException e) {
-					System.err.println("Strange IOException happened during closing file. Message: " + e.getMessage());
+					System.err
+							.println("Strange IOException happened during closing file. Message: "
+									+ e.getMessage());
 				}
 				try {
 					if (messageWriter != null) {
@@ -78,7 +84,9 @@ public class Main {
 						messageWriter.close();
 					}
 				} catch (IOException e) {
-					System.err.println("Strange IOException happened during closing file. Message: " + e.getMessage());
+					System.err
+							.println("Strange IOException happened during closing file. Message: "
+									+ e.getMessage());
 				}
 			}
 		} else {
