@@ -47,7 +47,6 @@ public class FileMessageReader {
 	 */
 	public Message getMessage() throws IllegalMessageFormatException,
 			IOException {
-		Message resultMessage = null;
 		String counterSting = null;
 		// Let's try to define number of lines in the message.
 		if ((counterSting = reader.readLine()) != null) {
@@ -63,6 +62,7 @@ public class FileMessageReader {
 			}
 
 			// At this point we know quantity of lines in the message
+			Message resultMessage = new Message();
 			String messageLine = null;
 			while (counter-- > 0) {
 				if ((messageLine = reader.readLine()) == null) {
@@ -75,9 +75,10 @@ public class FileMessageReader {
 					resultMessage.addLine(messageLine);
 				}
 			}
+			return resultMessage;
 		}
 		// If the file was empty, the result remains null.
-		return resultMessage;
+		return null;
 	}
 
 	/**
