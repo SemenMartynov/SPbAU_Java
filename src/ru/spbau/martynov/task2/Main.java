@@ -23,14 +23,16 @@
 package ru.spbau.martynov.task2;
 
 /**
-* File system walker.
-*/
+ * File system walker.
+ */
 public class Main {
 
 	/**
 	 * Entry point
 	 * 
-	 * @param args the first argument contains a way to a directory which is a tree root.
+	 * @param args
+	 *            the first argument contains a way to a directory which is a
+	 *            tree root.
 	 */
 	public static void main(String[] args) {
 		if (args.length != 1) {
@@ -40,12 +42,13 @@ public class Main {
 
 		try {
 			// "\\." - the dot symbol
-			FilesystemWalker walker = new FilesystemWalker(new PatternFilter("^[^\\.].*|$"));
+			FilesystemWalker walker = new FilesystemWalker(new PatternFilter(
+					"^[^\\.].*|$"));
 			walker.start(args[0]);
-		// IllegalArgumentException includes PatternSyntaxException
+			// IllegalArgumentException includes PatternSyntaxException
 		} catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
+			System.out.println(e.getMessage());
+		}
 	}
 
 }
