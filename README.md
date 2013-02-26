@@ -1,4 +1,7 @@
 SPbAU_Java
 ==========
 
-My hometasks.
+My hometasks for Java course.
+
+* FileMessageReader
+* FilesystemWalker
