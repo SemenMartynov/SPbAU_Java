@@ -44,7 +44,7 @@ public class FilesystemPrinter {
 		// If the element doesn't exist - we will create it, also we will save
 		// length of a nodeName.
 		if (prefix.size() <= prefixIndex) {
-			prefix.add(prefixIndex, new prefixNode(space));
+			prefix.add(prefixIndex, new PrefixNode(space));
 		} else {
 			prefix.get(prefixIndex).setSpace(space);
 			prefix.get(prefixIndex).setSeparator(true);
@@ -102,7 +102,7 @@ public class FilesystemPrinter {
 	 * Stores structures with information on quantity of spaces and a separator
 	 * flag.
 	 */
-	private Vector<prefixNode> prefix = new Vector<prefixNode>();
+	private Vector<PrefixNode> prefix = new Vector<PrefixNode>();
 
 	/**
 	 * @author Semen A Martynov
@@ -110,7 +110,7 @@ public class FilesystemPrinter {
 	 *         Class with information on quantity of spaces and a separator
 	 *         flag.
 	 */
-	private class prefixNode {
+	private class PrefixNode {
 		/**
 		 * Constructor with one argument - space. Separator flag will be set to
 		 * true.
@@ -118,7 +118,7 @@ public class FilesystemPrinter {
 		 * @param space
 		 *            Quantity of characters in a name of a parent directory.
 		 */
-		public prefixNode(int space) {
+		public PrefixNode(int space) {
 			this.space = space;
 			separator = true;
 		}
