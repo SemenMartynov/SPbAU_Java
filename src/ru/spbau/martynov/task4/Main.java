@@ -59,7 +59,7 @@ public class Main {
 			try {
 				Thread.sleep(1000L);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				e.printStackTrace(System.err);
 			}
 		}
 		// Infinite loop.
