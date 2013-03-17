@@ -10,8 +10,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipOutputStream;
 
-import ru.spbau.martynov.task1.IllegalMessageFormatException;
-
 /**
  * @author Semen A Martynov, 4 Mar 2013
  * 
