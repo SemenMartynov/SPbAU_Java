@@ -46,17 +46,12 @@ public class Decompressor {
 	 *             if an I/O error has occurred
 	 */
 	public void get() throws ZipException, IOException {
-		try {
-			Enumeration<? extends ZipEntry> entries = zipFile.entries();
+		Enumeration<? extends ZipEntry> entries = zipFile.entries();
 
-			while (entries.hasMoreElements()) {
-				ZipEntry zipEntry = (ZipEntry) entries.nextElement();
-				String zipEntryPath = zipEntry.getName();
-				write(zipEntryPath, zipFile.getInputStream(zipEntry));
-			}
-		} catch (IOException e) {
-			System.out.println("Strange IOException occurred");
-			e.printStackTrace(System.err);
+		while (entries.hasMoreElements()) {
+			ZipEntry zipEntry = (ZipEntry) entries.nextElement();
+			String zipEntryPath = zipEntry.getName();
+			write(zipEntryPath, zipFile.getInputStream(zipEntry));
 		}
 	}
 
@@ -75,6 +70,7 @@ public class Decompressor {
 			throws IOException {
 		System.out.print(filePath);
 
+		OutputStream outputStream = null;
 		try {
 			int index = filePath.lastIndexOf('/');
 			if (index != -1) {
@@ -82,13 +78,7 @@ public class Decompressor {
 				// creates structure of directories
 				file.mkdirs();
 			}
-		} catch (SecurityException e) {
-			System.out.println(" securityException problem - skipped");
-			e.printStackTrace(System.err);
-		}
 
-		OutputStream outputStream = null;
-		try {
 			outputStream = new BufferedOutputStream(new FileOutputStream(
 					filePath));
 			byte[] buffer = new byte[8000];
@@ -96,6 +86,7 @@ public class Decompressor {
 			// pulls out files from archive
 			while ((len = inputStream.read(buffer)) != -1)
 				outputStream.write(buffer, 0, len);
+
 		} catch (SecurityException | FileNotFoundException e) {
 			System.out.println(" securityException problem - skipped");
 			e.printStackTrace(System.err);
