@@ -91,18 +91,13 @@ public class Decompressor {
 			System.out.println(" securityException problem - skipped");
 			e.printStackTrace(System.err);
 		} finally {
-			if (outputStream != null) {
-				try {
+			try {
+				if (outputStream != null) {
 					outputStream.close();
-				} catch (IOException e) {
-					e.printStackTrace(System.err);
 				}
-			}
-			if (inputStream != null) {
-				try {
+			} finally {
+				if (inputStream != null) {
 					inputStream.close();
-				} catch (IOException e) {
-					e.printStackTrace(System.err);
 				}
 			}
 		}
