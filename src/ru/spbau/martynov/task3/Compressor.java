@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.zip.Deflater;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
@@ -30,9 +31,16 @@ public class Compressor {
 	 * @throws SecurityException
 	 *             if a security manager exists and its checkWrite method denies
 	 *             write access to the file.
+	 * @throws FileAlreadyExistsException
+	 *             if the name of archive matches to the name of the file
+	 *             existing in a directory.
 	 */
 	public Compressor(String archiveName) throws FileNotFoundException,
-			SecurityException {
+			SecurityException, FileAlreadyExistsException {
+		File archiveFile = new File(archiveName);
+		if (archiveFile.exists()) {
+			throw new FileAlreadyExistsException(archiveName);
+		}
 		zipOutputStream = new ZipOutputStream(new FileOutputStream(archiveName));
 		zipOutputStream.setLevel(Deflater.DEFAULT_COMPRESSION);
 	}

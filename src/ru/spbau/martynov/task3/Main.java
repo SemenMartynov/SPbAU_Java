@@ -24,6 +24,7 @@ package ru.spbau.martynov.task3;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.zip.ZipException;
 
 /**
@@ -59,6 +60,12 @@ public class Main {
 				for (int i = 2; i != args.length; i++) {
 					compressor.add(args[i]);
 				}
+			} catch (FileAlreadyExistsException e) {
+				System.out
+						.println("File "
+								+ args[1]
+								+ " already exists - chose other name to prevent data loss.");
+				e.printStackTrace(System.err);
 			} catch (FileNotFoundException | SecurityException e) {
 				System.out.println("Can't create " + args[1]);
 				e.printStackTrace(System.err);
