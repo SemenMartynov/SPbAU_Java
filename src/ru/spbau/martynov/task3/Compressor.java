@@ -10,6 +10,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipOutputStream;
 
+import ru.spbau.martynov.task1.IllegalMessageFormatException;
+
 /**
  * @author Semen A Martynov, 4 Mar 2013
  * 
@@ -131,8 +133,13 @@ public class Compressor {
 		FileInputStream fileInputStream = null;
 		try {
 			fileInputStream = new FileInputStream(file);
-			ZipEntry zipEntry = new ZipEntry(file.getPath().substring(
-					1 + root.getParent().length()));
+			ZipEntry zipEntry = null;
+			if (file != root) {
+				zipEntry = new ZipEntry(file.getPath().substring(
+						1 + root.getParent().length()));
+			} else {
+				zipEntry = new ZipEntry(file.getPath());
+			}
 			zipOutputStream.putNextEntry(zipEntry);
 
 			int len;
