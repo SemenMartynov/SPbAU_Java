@@ -521,16 +521,16 @@ public abstract class BinarySearchTree<E extends Comparable<E>> extends
 		}
 
 		Node temp = node.parent;
-		while (temp != null && temp.right == node) {
+		while (temp != null) {
+			if (temp.left != null && temp.left == node && temp.right != null) {
+				return temp.right;
+			}
+
 			node = temp;
 			temp = node.parent;
 		}
 
-		if (temp != null) {
-			return temp.right;
-		} else {
-			return temp;
-		}
+		return temp;
 	}
 
 	/**
