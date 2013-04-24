@@ -31,7 +31,7 @@ package ru.spbau.martynov.task6;
  * @param <E>
  *            The value stored in the tree nodes.
  */
-public class UnbalancedBinarySearchTree<E extends Comparable<E>> extends
+public class UnbalancedBinarySearchTree<E extends Comparable<? super E>> extends
 		BinarySearchTree<E> {
 
 	/**

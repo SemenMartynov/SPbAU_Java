@@ -31,7 +31,7 @@ package ru.spbau.martynov.task6;
  * @param <E>
  *            The value stored in the tree nodes.
  */
-public class AVLBinarySearchTree<E extends Comparable<E>> extends
+public class AVLBinarySearchTree<E extends Comparable<? super E>> extends
 		BinarySearchTree<E> {
 
 	/**

@@ -38,7 +38,7 @@ import java.util.SortedSet;
  * @param <E>
  *            The value stored in the tree nodes.
  */
-public abstract class BinarySearchTree<E extends Comparable<E>> extends
+public abstract class BinarySearchTree<E extends Comparable<? super E>> extends
 		AbstractSet<E> implements NavigableSet<E> {
 
 	/**
