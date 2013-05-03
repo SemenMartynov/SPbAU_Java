@@ -38,8 +38,8 @@ public class AuthorizationDialog extends JFrame {
 	AuthorizationDialog() {
 		super("Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(800, 400);
-		// setMinimumSize(new Dimension(370, 150));
+		setSize(360, 140);
+		setMinimumSize(new Dimension(360, 140));
 
 		// Buttons
 		JButton clearButton = new JButton("Clear");
@@ -106,7 +106,7 @@ public class AuthorizationDialog extends JFrame {
 
 		// Left panel
 		Box eastBox = Box.createVerticalBox();
-		eastBox.setBorder(new EmptyBorder(12, 6, 12, 6));
+		eastBox.setBorder(new EmptyBorder(6, 0, 6, 6));
 		eastBox.add(loginBox);
 		eastBox.add(Box.createVerticalStrut(6));
 		eastBox.add(passwordBox);
@@ -133,10 +133,11 @@ public class AuthorizationDialog extends JFrame {
 
 		public void paintComponent(Graphics g) {
 			int min = Math.min(getWidth(), getHeight());
+			min = Math.max(min - 12, 1);
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
 					RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-			g2.drawImage(img, 0, 0, min, min, null);
+			g2.drawImage(img, 6, 6, min, min, null);
 		}
 
 	}
