@@ -12,4 +12,6 @@ My hometasks for Java course.
 * ReflectionSerializer - task7
 * Philosopher & ArrayCalculator - task8
 * Distributed service for complex computing tasks - task9
+* Torrent - task10
+* Swing - task11
 * TicTacToe
