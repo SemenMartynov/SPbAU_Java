@@ -43,6 +43,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -62,7 +63,7 @@ public class BrowserWindow extends JFrame {
 	 */
 	public BrowserWindow(String userName) {
 		super("Hello, " + userName);
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setSize(800, 600);
 		setMinimumSize(new Dimension(400, 200));
 		closeFileAction.setEnabled(false);
@@ -157,28 +158,37 @@ public class BrowserWindow extends JFrame {
 		 */
 		@Override
 		public void actionPerformed(ActionEvent event) {
-			JFileChooser fileChooser = new JFileChooser();
-			if (fileChooser.showOpenDialog(null) != JFileChooser.APPROVE_OPTION) {
-				return;
-			}
 
-			File textFile = fileChooser.getSelectedFile();
-			JTextPane textPane = new JTextPane();
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
 
-			try (BufferedReader reader = new BufferedReader(new FileReader(
-					textFile))) {
-				textPane.read(reader, null);
-				workspace.addTab(fileChooser.getName(textFile),
-						new JScrollPane(textPane));
-				workspace.setSelectedIndex(workspace.getTabCount() - 1);
+					JFileChooser fileChooser = new JFileChooser();
+					if (fileChooser.showOpenDialog(null) != JFileChooser.APPROVE_OPTION) {
+						return;
+					}
 
-			} catch (FileNotFoundException e) {
-				JOptionPane.showMessageDialog(null, e.getMessage(),
-						"File not found", JOptionPane.ERROR_MESSAGE);
-			} catch (IOException e) {
-				JOptionPane.showMessageDialog(null, e.getMessage(),
-						"Can't read file", JOptionPane.ERROR_MESSAGE);
-			}
+					File textFile = fileChooser.getSelectedFile();
+					JTextPane textPane = new JTextPane();
+
+					try (BufferedReader reader = new BufferedReader(
+							new FileReader(textFile))) {
+						textPane.read(reader, null);
+						workspace.addTab(fileChooser.getName(textFile),
+								new JScrollPane(textPane));
+						workspace.setSelectedIndex(workspace.getTabCount() - 1);
+
+						closeFileAction.setEnabled(true);
+
+					} catch (FileNotFoundException e) {
+						JOptionPane.showMessageDialog(null, e.getMessage(),
+								"File not found", JOptionPane.ERROR_MESSAGE);
+					} catch (IOException e) {
+						JOptionPane.showMessageDialog(null, e.getMessage(),
+								"Can't read file", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			});
 		}
 	}
 

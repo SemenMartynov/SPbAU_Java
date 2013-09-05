@@ -43,13 +43,14 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ComponentUI;
 
 /**
  * @author Semen Martynov
  * 
- * Authorization dialog.
+ *         Authorization dialog.
  */
 @SuppressWarnings("serial")
 public class AuthorizationDialog extends JFrame {
@@ -59,7 +60,7 @@ public class AuthorizationDialog extends JFrame {
 	 */
 	AuthorizationDialog() {
 		super("Login");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(360, 145);
 		setMinimumSize(new Dimension(360, 145));
 
@@ -128,10 +129,10 @@ public class AuthorizationDialog extends JFrame {
 
 	/**
 	 * @author Semen Martynov
-	 *
-	 * Class for inscribing images in a frame.
+	 * 
+	 *         Class for inscribing images in a frame.
 	 */
-	class ImagePanel extends JPanel {
+	private static class ImagePanel extends JPanel {
 		/**
 		 * The displayed image
 		 */
@@ -144,8 +145,11 @@ public class AuthorizationDialog extends JFrame {
 		/**
 		 * Constructor
 		 * 
-		 * @param img displayed image
-		 * @param border offset from the edges (if the value is less than zero, then offset = 0).
+		 * @param img
+		 *            displayed image
+		 * @param border
+		 *            offset from the edges (if the value is less than zero,
+		 *            then offset = 0).
 		 */
 		public ImagePanel(Image img, int border) {
 			this.image = img;
@@ -153,16 +157,17 @@ public class AuthorizationDialog extends JFrame {
 		}
 
 		/**
-	     * Calls the UI delegate's paint method, if the UI delegate
-	     * is non-<code>null</code>.  We pass the delegate a copy of the
-	     * <code>Graphics</code> object to protect the rest of the
-	     * paint code from irrevocable changes
-	     * (for example, <code>Graphics.translate</code>).
-	     *
-	     * @param g the <code>Graphics</code> object to protect
-	     * @see #paint
-	     * @see ComponentUI
-	     */
+		 * Calls the UI delegate's paint method, if the UI delegate is non-
+		 * <code>null</code>. We pass the delegate a copy of the
+		 * <code>Graphics</code> object to protect the rest of the paint code
+		 * from irrevocable changes (for example,
+		 * <code>Graphics.translate</code>).
+		 * 
+		 * @param g
+		 *            the <code>Graphics</code> object to protect
+		 * @see #paint
+		 * @see ComponentUI
+		 */
 		@Override
 		protected void paintComponent(Graphics g) {
 			int min = Math.min(getWidth(), getHeight());
@@ -177,8 +182,8 @@ public class AuthorizationDialog extends JFrame {
 
 	/**
 	 * @author Semen Martynov
-	 *
-	 *	Clears the username and password.
+	 * 
+	 *         Clears the username and password.
 	 */
 	private class ClearFormAction extends AbstractAction {
 		/**
@@ -201,8 +206,8 @@ public class AuthorizationDialog extends JFrame {
 
 	/**
 	 * @author Semen Martynov
-	 *
-	 * Registers a new user in the system.
+	 * 
+	 *         Registers a new user in the system.
 	 */
 	private class RegisterAction extends AbstractAction {
 		/**
@@ -231,8 +236,8 @@ public class AuthorizationDialog extends JFrame {
 
 	/**
 	 * @author Semen Martynov
-	 *
-	 * "Checks" the password and starts the browser.
+	 * 
+	 *         "Checks" the password and starts the browser.
 	 */
 	private class LoginAction extends AbstractAction {
 		/**
@@ -253,9 +258,15 @@ public class AuthorizationDialog extends JFrame {
 
 			new Thread(new Runnable() {
 				public void run() {
-					for (int i = 0; i <= 100; i += 5) {
+					for (int i = 0; i <= 20; i++) {
 						try {
-							progressBar.setValue(i);
+							final int progressValue = i * 5;
+							SwingUtilities.invokeLater(new Runnable() {
+								@Override
+								public void run() {
+									progressBar.setValue(progressValue);
+								}
+							});
 							Thread.sleep(150);
 						} catch (InterruptedException e1) {
 							setEnabled(true);
@@ -281,7 +292,7 @@ public class AuthorizationDialog extends JFrame {
 	 * The field for login.
 	 */
 	private JTextField login = new JTextField();
-	
+
 	/**
 	 * The password field.
 	 */
